@@ -22,10 +22,11 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "userId")
 	private Integer userId;
+	private String image;
 
-	@Lob
-	@Column(columnDefinition = "LONGBLOB")
-	private byte[] image;
+//	@Lob
+//	@Column(columnDefinition = "LONGBLOB")
+//	private byte[] image;
 
 	@Column(nullable = false, length = 50, name = "firstName")
 	private String firstName;
@@ -61,11 +62,11 @@ public class UserEntity {
 	@LastModifiedDate
 	@Column(name = "updatedDate")
 	private LocalDateTime updatedDate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "organizationId", nullable = false)
 	private OrganizationEntity organization;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "branchId", nullable = false)
 	private BranchEntity branch;
@@ -79,8 +80,39 @@ public class UserEntity {
 	private RoleEntity role;
 
 	
-
 	
+	
+	
+	
+	public UserEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UserEntity(Integer userId, String image, String firstName, String lastName, String email, String phoneNumber,
+			String password, Boolean isActive, Boolean isDeleted, String createdBy, String updatedBy,
+			LocalDateTime createdDate, LocalDateTime updatedDate, OrganizationEntity organization, BranchEntity branch,
+			DepartmentEntity department, RoleEntity role) {
+		super();
+		this.userId = userId;
+		this.image = image;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.password = password;
+		this.isActive = isActive;
+		this.isDeleted = isDeleted;
+		this.createdBy = createdBy;
+		this.updatedBy = updatedBy;
+		this.createdDate = createdDate;
+		this.updatedDate = updatedDate;
+		this.organization = organization;
+		this.branch = branch;
+		this.department = department;
+		this.role = role;
+	}
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -89,11 +121,11 @@ public class UserEntity {
 		this.userId = userId;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -185,12 +217,12 @@ public class UserEntity {
 		this.updatedDate = updatedDate;
 	}
 
-	public RoleEntity getRole() {
-		return role;
+	public OrganizationEntity getOrganization() {
+		return organization;
 	}
 
-	public void setRole(RoleEntity role) {
-		this.role = role;
+	public void setOrganization(OrganizationEntity organization) {
+		this.organization = organization;
 	}
 
 	public BranchEntity getBranch() {
@@ -209,40 +241,10 @@ public class UserEntity {
 		this.department = department;
 	}
 
-	public OrganizationEntity getOrganization() {
-		return organization;
+	public RoleEntity getRole() {
+		return role;
 	}
-
-	public void setOrganization(OrganizationEntity organization) {
-		this.organization = organization;
-	}
-
-	public UserEntity(Integer userId, byte[] image, String firstName, String lastName, String email, String phoneNumber,
-			String password, Boolean isActive, Boolean isDeleted, String createdBy, String updatedBy,
-			LocalDateTime createdDate, LocalDateTime updatedDate, RoleEntity role, BranchEntity branch, DepartmentEntity department,
-			OrganizationEntity organization) {
-		super();
-		this.userId = userId;
-		this.image = image;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.phoneNumber = phoneNumber;
-		this.password = password;
-		this.isActive = isActive;
-		this.isDeleted = isDeleted;
-		this.createdBy = createdBy;
-		this.updatedBy = updatedBy;
-		this.createdDate = createdDate;
-		this.updatedDate = updatedDate;
+	public void setRole(RoleEntity role) {
 		this.role = role;
-		this.branch = branch;
-		this.department = department;
-		this.organization = organization;
-	}
-
-	public UserEntity() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 }

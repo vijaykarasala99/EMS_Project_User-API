@@ -11,7 +11,9 @@ import com.vijayit.entity.UserEntity;
 public class UserDTO {
 	
     private Integer userId;
-    private byte[] image;
+    
+    private String image;
+    
     private String firstName;
     private String lastName;
     private String email;
@@ -61,11 +63,11 @@ public class UserDTO {
 		this.userId = userId;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
