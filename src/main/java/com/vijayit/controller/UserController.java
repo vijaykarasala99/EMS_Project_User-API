@@ -34,101 +34,92 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-    private static final String UPLOAD_DIR = "uploads/";
+	private static final String UPLOAD_DIR = "uploads/";
 
-    @PostMapping("/save")
-    public ResponseEntity<UserEntity> createUser(
-            @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam("firstName") String firstName,
-            
-            @RequestParam(value="lastName",required = false) String lastName,
-            @RequestParam(value="phoneNumber",required = false) String phoneNumber,
-            @RequestParam(value="email", required = false) String email,
-            @RequestParam(value = "password", required = false) String password,
-            @RequestParam(value="isActive", required = false) Boolean isActive,
-            @RequestParam(value="isDeleted", required = false) Boolean isDeleted,
-            @RequestParam(value="updatedBy", required = false) String createdBy,
-            @RequestParam(value="updatedBy", required = false) String updatedBy,
-            
-            @RequestParam("roleId") Integer roleId,
-            @RequestParam("branchId") Integer branchId,
-            @RequestParam("departmentId") Integer departmentId,
-            @RequestParam("organizationId") Integer organizationId) throws IOException {
+	@PostMapping("/save")
+	public ResponseEntity<UserEntity> createUser(@RequestParam(value = "image", required = false) MultipartFile image,
+			@RequestParam("firstName") String firstName,
 
-   UserEntity user = userService.saveUser(image, firstName, lastName, phoneNumber, email, password, isActive, isDeleted, createdBy, updatedBy, roleId, branchId, departmentId, organizationId);
-   return new ResponseEntity<>(user, HttpStatus.CREATED);
-}
+			@RequestParam(value = "lastName", required = false) String lastName,
+			@RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+			@RequestParam(value = "email", required = false) String email,
+			@RequestParam(value = "password", required = false) String password,
+			@RequestParam(value = "isActive", required = false) Boolean isActive,
+			@RequestParam(value = "isDeleted", required = false) Boolean isDeleted,
+			@RequestParam(value = "updatedBy", required = false) String createdBy,
+			@RequestParam(value = "updatedBy", required = false) String updatedBy,
 
-    @PutMapping("/update/{userId}")
-    public ResponseEntity<UserEntity> updateUser(
-            @PathVariable Integer userId,
-            
-            @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam("firstName") String firstName,
-            
-            @RequestParam(value="lastName",required = false) String lastName,
-            @RequestParam(value="phoneNumber",required = false) String phoneNumber,
-            @RequestParam(value="email", required = false) String email,
-            @RequestParam(value = "password", required = false) String password,
-            @RequestParam(value="isActive", required = false) Boolean isActive,
-            @RequestParam(value="isDeleted", required = false) Boolean isDeleted,
-            @RequestParam(value="updatedBy", required = false) String updatedBy,
-            
-            @RequestParam(value="roleId", required = false) Integer roleId,
-            @RequestParam(value="branchId", required = false) Integer branchId,
-            @RequestParam(value="departmentId", required = false) Integer departmentId,
-            @RequestParam(value="organizationId", required = false) Integer organizationId) throws IOException {
+			@RequestParam("roleId") Integer roleId, @RequestParam("branchId") Integer branchId,
+			@RequestParam("departmentId") Integer departmentId, @RequestParam("organizationId") Integer organizationId)
+			throws IOException {
 
-        UserEntity user = userService.updateUser(userId, image, firstName, lastName, phoneNumber, email, password, isActive, isDeleted, updatedBy, roleId, branchId, departmentId, organizationId);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-}
+		UserEntity user = userService.saveUser(image, firstName, lastName, phoneNumber, email, password, isActive,
+		isDeleted, createdBy, updatedBy, roleId, branchId, departmentId, organizationId);
+		return new ResponseEntity<>(user, HttpStatus.CREATED);
+	}
 
-    
-    
-    @GetMapping("/get/{userId}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer userId) {
-        UserDTO user = userService.getUserById(userId);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
+	@PutMapping("/update/{userId}")
+	public ResponseEntity<UserEntity> updateUser(@PathVariable Integer userId,
 
-    @GetMapping("/getall")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> users = userService.getAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
+			@RequestParam(value = "image", required = false) MultipartFile image,
+			@RequestParam("firstName") String firstName,
 
-    @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Integer userId) {
-        String result = userService.deleteUserById(userId);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+			@RequestParam(value = "lastName", required = false) String lastName,
+			@RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+			@RequestParam(value = "email", required = false) String email,
+			@RequestParam(value = "password", required = false) String password,
+			@RequestParam(value = "isActive", required = false) Boolean isActive,
+			@RequestParam(value = "isDeleted", required = false) Boolean isDeleted,
+			@RequestParam(value = "updatedBy", required = false) String updatedBy,
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    @GetMapping("/image/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-        try {
-            Path file = Paths.get(UPLOAD_DIR).resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
-            if (resource.exists() || resource.isReadable()) {
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                        .contentType(MediaType.IMAGE_JPEG)
-                        .body(resource);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
+			@RequestParam(value = "roleId", required = false) Integer roleId,
+			@RequestParam(value = "branchId", required = false) Integer branchId,
+			@RequestParam(value = "departmentId", required = false) Integer departmentId,
+			@RequestParam(value = "organizationId", required = false) Integer organizationId) throws IOException {
+
+		UserEntity user = userService.updateUser(userId, image, firstName, lastName, phoneNumber, email, password,
+				isActive, isDeleted, updatedBy, roleId, branchId, departmentId, organizationId);
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+
+	
+	
+	
+	
+	@GetMapping("/get/{userId}")
+	public ResponseEntity<UserDTO> getUserById(@PathVariable Integer userId) {
+		UserDTO user = userService.getUserById(userId);
+		return new ResponseEntity<>(user, HttpStatus.OK);
+	}
+
+	@GetMapping("/getall")
+	public ResponseEntity<List<UserDTO>> getAllUsers() {
+		List<UserDTO> users = userService.getAllUsers();
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/delete/{userId}")
+	public ResponseEntity<String> deleteUserById(@PathVariable Integer userId) {
+		String result = userService.deleteUserById(userId);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@GetMapping("/image/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+		try {
+			Path file = Paths.get(UPLOAD_DIR).resolve(filename);
+			Resource resource = new UrlResource(file.toUri());
+			if (resource.exists() || resource.isReadable()) {
+				return ResponseEntity.ok()
+						.header(HttpHeaders.CONTENT_DISPOSITION,
+								"attachment; filename=\"" + resource.getFilename() + "\"")
+						.contentType(MediaType.IMAGE_JPEG).body(resource);
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			}
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+	}
 }
